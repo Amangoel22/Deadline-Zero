@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+
+  xp        Int      @default(0)
+  streak    Int      @default(0)
+  lastActive DateTime?
+
+  tasks      Task[]
+  missions   Mission[]
+  routine    Routine?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Routine {
+  id                 String       @id @default(uuid())
+  userId             String       @unique
+  wakeTime           String
+  sleepTime          String
+  preferredWorkStart String?
+  preferredWorkEnd   String?
+  timezone           String       @default("Asia/Kolkata")
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  commitments        Commitment[]
+  user               User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Commitment {
+  id         String   @id @default(uuid())
+  routineId  String
+  title      String
+  startTime  String
+  endTime    String
+  daysOfWeek Int[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  routine    Routine  @relation(fields: [routineId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id                String       @id @default(uuid())
+  userId            String
+  title             String
+  goal              String?
+  description       String?
+  category          TaskCategory
+  priority          TaskPriority @default(MEDIUM)
+  deadline          DateTime?
+  estimatedDuration Int?
+  status            TaskStatus   @default(PENDING)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  missions          Mission[]
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Mission {
+  id                 String            @id @default(uuid())
+  taskId             String
+  userId             String
+  status             MissionStatus     @default(PENDING)
+  startedAt          DateTime?
+  endedAt            DateTime?
+  focusIntegrity     Int               @default(100)
+  successProbability Int?
+  focusPassesUsed    Int               @default(0)
+  rechargeCount      Int               @default(0)
+  rechargeTime       Int               @default(0)
+  interruptionCount  Int               @default(0)
+  timeFocused        Int               @default(0)
+  notes              String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  task               Task              @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resources          MissionResource[]
+}
+
+model MissionResource {
+  id        String  @id @default(uuid())
+  missionId String
+  name      String
+  mission   Mission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskCategory {
+  COLLEGE
+  CODING
+  PERSONAL
+  HEALTH
+  WORK
+}
+
+enum MissionStatus {
+  PENDING
+  ACTIVE
+  PAUSED
+  COMPLETED
+  INTERRUPTED
+  CANCELLED
+}
