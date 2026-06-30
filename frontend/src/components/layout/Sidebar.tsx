@@ -1,13 +1,15 @@
-import { Link, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  CheckSquare, 
-  Crosshair, 
-  BarChart3, 
-  User, 
-  Settings as SettingsIcon
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  CheckSquare,
+  Crosshair,
+  BarChart3,
+  User,
+  Settings as SettingsIcon,
+  LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
 
 const NAV_ITEMS = [
   { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
@@ -23,19 +25,24 @@ const BOTTOM_NAV_ITEMS = [
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/', { replace: true });
+  };
   const renderNavLink = (item: typeof NAV_ITEMS[0]) => {
     const isActive = location.pathname === item.path;
     const Icon = item.icon;
-    
+
     return (
-      <Link 
+      <Link
         key={item.path}
         to={item.path}
         className={cn(
           "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group relative",
-          isActive 
-            ? "text-foreground bg-white/[0.06] shadow-sm" 
+          isActive
+            ? "text-foreground bg-white/[0.06] shadow-sm"
             : "text-muted-foreground hover:text-foreground hover:bg-white/[0.03]"
         )}
       >
@@ -52,16 +59,16 @@ export default function Sidebar() {
     <aside className="w-[240px] flex-shrink-0 border-r border-white/5 bg-sidebar flex flex-col hidden md:flex">
       <div className="h-16 flex items-center px-6">
         <Link to="/" className="flex items-center gap-3 group">
-  <img
-    src="/logo.png"
-    alt="Deadline Zero"
-    className="h-9 w-9 object-contain transition-transform group-hover:scale-105"
-  />
+          <img
+            src="/logo.png"
+            alt="Deadline Zero"
+            className="h-9 w-9 object-contain transition-transform group-hover:scale-105"
+          />
 
-  <span className="font-semibold tracking-tight text-[15px]">
-    Deadline Zero
-  </span>
-</Link>
+          <span className="font-semibold tracking-tight text-[15px]">
+            Deadline Zero
+          </span>
+        </Link>
       </div>
 
       <div className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
@@ -70,7 +77,17 @@ export default function Sidebar() {
       </div>
 
       <div className="p-3 mt-auto border-t border-white/5 space-y-1 bg-black/10">
-        {BOTTOM_NAV_ITEMS.map(renderNavLink)}
+        {BOTTOM_NAV_ITEMS.slice(0, 1).map(renderNavLink)}
+
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 w-full text-left text-muted-foreground hover:text-red-400 hover:bg-red-500/10 group"
+        >
+          <LogOut className="w-4 h-4" />
+          Logout
+        </button>
+
+        {BOTTOM_NAV_ITEMS.slice(1).map(renderNavLink)}
       </div>
     </aside>
   );
