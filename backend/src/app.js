@@ -14,7 +14,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Health route
 app.get('/', (req, res) => {
   res.json({
     success: true,

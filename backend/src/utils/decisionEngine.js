@@ -2,9 +2,6 @@ export function calculateDecision(task, routine) {
   let score = 0;
   const reasoning = [];
 
-  // -------------------------
-  // Priority
-  // -------------------------
   const priority = (task.priority || "").toLowerCase();
 
   switch (priority) {
@@ -28,9 +25,7 @@ export function calculateDecision(task, routine) {
       reasoning.push("Low priority.");
   }
 
-  // -------------------------
-  // Deadline Urgency
-  // -------------------------
+
   if (task.deadline) {
     const hoursLeft =
       (new Date(task.deadline).getTime() - Date.now()) / (1000 * 60 * 60);
@@ -50,9 +45,7 @@ export function calculateDecision(task, routine) {
     }
   }
 
-  // -------------------------
-  // Duration
-  // -------------------------
+
   const duration = Number(task.estimatedDuration || 60);
 
   if (duration <= 45) {
@@ -66,17 +59,11 @@ export function calculateDecision(task, routine) {
     reasoning.push("Long task requiring multiple sessions.");
   }
 
-  // -------------------------
-  // Routine Match
-  // -------------------------
   if (routine?.preferredWorkStart && routine?.preferredWorkEnd) {
     reasoning.push("Matches your daily routine.");
     score += 10;
   }
 
-  // -------------------------
-  // Clamp Score
-  // -------------------------
   score = Math.max(5, Math.min(95, score));
 
   return {

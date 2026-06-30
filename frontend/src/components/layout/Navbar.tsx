@@ -38,7 +38,6 @@ export default function Navbar() {
   return (
     <header className="h-16 border-b border-white/5 bg-background/80 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-10">
       <div className="flex items-center gap-4">
-        {/* Mobile menu trigger */}
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden -ml-2 text-muted-foreground hover:text-foreground">
