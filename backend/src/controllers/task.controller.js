@@ -31,7 +31,6 @@ class TaskController {
         status,
         userId
       };
-      console.log("Task payload:", taskData);
       const task = await taskService.createTask(taskData);
       
       return res.status(201).json({

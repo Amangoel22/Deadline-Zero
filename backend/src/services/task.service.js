@@ -2,13 +2,11 @@ import prisma from '../config/prisma.js';
 
 class TaskService {
   async createTask(taskData) {
-    console.log("NEW TASK SERVICE RUNNING");
     const userId = taskData.userId;
     
     // Ensure placeholder user exists to avoid foreign key constraints errors
  const users = await prisma.user.findMany();
 
-console.log("All users:", users);
 
 const user = await prisma.user.findUnique({
   where: {
@@ -16,8 +14,7 @@ const user = await prisma.user.findUnique({
   },
 });
 
-console.log("Searching for:", taskData.userId);
-console.log("Found:", user);
+
 
 if (!user) {
   throw new Error("User not found");

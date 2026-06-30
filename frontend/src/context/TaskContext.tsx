@@ -108,7 +108,6 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     try {
 
       const backendPayload = mapFrontendToBackendTask(task);
-      console.log("Backend payload:", backendPayload);
 
       await api.post("/tasks", {
   ...backendPayload,
