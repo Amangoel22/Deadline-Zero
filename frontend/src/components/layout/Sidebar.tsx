@@ -29,7 +29,7 @@ export default function Sidebar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/', { replace: true });
+    window.location.href = "/";
   };
   const renderNavLink = (item: typeof NAV_ITEMS[0]) => {
     const isActive = location.pathname === item.path;
@@ -58,7 +58,7 @@ export default function Sidebar() {
   return (
     <aside className="w-[240px] flex-shrink-0 border-r border-white/5 bg-sidebar flex flex-col hidden md:flex">
       <div className="h-16 flex items-center px-6">
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/dashboard" className="flex items-center gap-3 group">
           <img
             src="/logo.png"
             alt="Deadline Zero"
@@ -81,9 +81,9 @@ export default function Sidebar() {
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 w-full text-left text-muted-foreground hover:text-red-400 hover:bg-red-500/10 group"
+          className="group flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-muted-foreground hover:bg-red-500/10 hover:text-red-400"
         >
-          <LogOut className="w-4 h-4" />
+          <LogOut className="w-4 h-4 transition-colors" />
           Logout
         </button>
 
