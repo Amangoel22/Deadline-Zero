@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   CheckSquare, 
-  Calendar as CalendarIcon, 
   Crosshair, 
   BarChart3, 
   User, 
@@ -13,7 +12,6 @@ import { cn } from '@/lib/utils';
 const NAV_ITEMS = [
   { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
   { name: 'Tasks', path: '/tasks', icon: CheckSquare },
-  { name: 'Calendar', path: '/calendar', icon: CalendarIcon },
   { name: 'Mission Center', path: '/mission', icon: Crosshair },
   { name: 'Analytics', path: '/analytics', icon: BarChart3 },
 ];
