@@ -85,7 +85,6 @@ export default function Dashboard() {
         const mission = await getActiveMission();
         setActiveMission(mission);
       } catch (err) {
-        console.error(err);
       }
     };
 
@@ -136,19 +135,15 @@ export default function Dashboard() {
   };
 
   const handleBuildPlan = async () => {
-    console.log("1");
 
     if (!routine) {
-      console.log("Routine is null");
       return;
     }
 
-    console.log("2");
 
     setIsPlanning(true);
 
     try {
-      console.log("3");
 
       const plan = await generatePlan(tasks, routine);
       setSchedule(plan.schedule);
@@ -157,25 +152,10 @@ export default function Dashboard() {
       if (plan.missionTask) {
         setMissionTask(plan.missionTask);
       }
-
-      console.log("4", plan);
-
-
-      console.log("5");
-
       setPlanCompleted(true);
 
-      console.log("6");
-
-      // Temporarily comment these
-      // const mission = await getActiveMission();
-      // setActiveMission(mission);
-
-      console.log("7");
-    } catch (err) {
-      console.error("ERROR:", err);
+    } catch{
     } finally {
-      console.log("8");
       setIsPlanning(false);
     }
   };
@@ -188,9 +168,8 @@ export default function Dashboard() {
     try {
       await startMission(missionTask.id);
       navigate("/mission");
-    } catch (err) {
-      console.error(err);
-    }
+    } catch {
+}
   };
 
 
