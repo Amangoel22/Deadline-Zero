@@ -2,7 +2,6 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { Zap } from 'lucide-react';
 import InteractiveDashboard from '../components/landing/InteractiveDashboard';
 import { cn } from '../lib/utils';
 
@@ -19,94 +18,99 @@ const SECTIONS = [
 
 export default function Landing() {
   const [activeSection, setActiveSection] = useState(1);
-  
+
   return (
     <div className="bg-[#050505] text-white min-h-screen font-sans selection:bg-white/20">
-       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-12 mix-blend-difference pointer-events-none">
-         <div className="flex items-center gap-2">
-           <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
-             <Zap className="w-4 h-4 text-black" />
-           </div>
-           <span className="text-xl font-medium tracking-tight">Deadline Zero</span>
-         </div>
-         <div className="flex items-center gap-4 pointer-events-auto">
-           <Link to="/login" className="text-sm font-medium hover:opacity-70 transition-opacity">Log in</Link>
-           <Button asChild className="rounded-full h-9 px-4 text-xs font-medium bg-white text-black hover:bg-white/90">
-             <Link to="/signup">Get Started</Link>
-           </Button>
-         </div>
-       </nav>
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-12 mix-blend-difference pointer-events-none">
+        <Link to="/" className="flex items-center gap-3 pointer-events-auto">
+          <img
+            src="/logo.png"
+            alt="Deadline Zero"
+            className="h-10 w-10 object-contain"
+          />
 
-       <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col md:flex-row relative">
-          
-          {/* Text Content (Left) */}
-          <div className="w-full md:w-5/12 pt-[25vh] pb-[25vh] relative z-10">
-             {SECTIONS.map((section) => (
-                <motion.div 
-                   key={section.id} 
-                   onViewportEnter={() => setActiveSection(section.id)}
-                   viewport={{ margin: "-40% 0px -40% 0px" }}
-                   className="min-h-[75vh] flex flex-col justify-center"
-                >
-                   <div className={cn(
-                      "transition-all duration-700 max-w-md",
-                      activeSection === section.id ? "opacity-100 translate-y-0" : "opacity-20 translate-y-4"
-                   )}>
-                      <h2 className={cn(
-                        "font-semibold tracking-tighter mb-6 text-balance leading-[1.05]",
-                        section.id === 1 ? "text-5xl md:text-7xl" : "text-4xl md:text-5xl"
-                      )}>
-                        {section.title.split('\n').map((line, i) => <span key={i} className="block">{line}</span>)}
-                      </h2>
-                      <p className="text-lg text-white/60 font-light leading-relaxed mb-8">
-                        {section.desc}
-                      </p>
-                      {section.id === 1 && (
-                        <div className="flex items-center gap-4 pointer-events-auto">
-                          <Button asChild size="lg" className="rounded-full h-12 px-8 text-base bg-white text-black hover:bg-white/90">
-                            <Link to="/signup">Start Your Mission</Link>
-                          </Button>
-                        </div>
-                      )}
-                   </div>
-                </motion.div>
-             ))}
-             
-             {/* Final CTA */}
-             <motion.div 
-                onViewportEnter={() => setActiveSection(9)}
-                viewport={{ margin: "-40% 0px -40% 0px" }}
-                className="h-[75vh] flex flex-col justify-center pointer-events-auto"
-             >
-                <div className={cn(
-                   "transition-all duration-700",
-                   activeSection === 9 ? "opacity-100 translate-y-0" : "opacity-20 translate-y-4"
+          <span className="text-xl font-semibold tracking-tight">
+            Deadline Zero
+          </span>
+        </Link>
+        <div className="flex items-center gap-4 pointer-events-auto">
+          <Link to="/login" className="text-sm font-medium hover:opacity-70 transition-opacity">Log in</Link>
+          <Button asChild className="rounded-full h-9 px-4 text-xs font-medium bg-white text-black hover:bg-white/90">
+            <Link to="/signup">Get Started</Link>
+          </Button>
+        </div>
+      </nav>
+
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col md:flex-row relative">
+
+        {/* Text Content (Left) */}
+        <div className="w-full md:w-5/12 pt-[25vh] pb-[25vh] relative z-10">
+          {SECTIONS.map((section) => (
+            <motion.div
+              key={section.id}
+              onViewportEnter={() => setActiveSection(section.id)}
+              viewport={{ margin: "-40% 0px -40% 0px" }}
+              className="min-h-[75vh] flex flex-col justify-center"
+            >
+              <div className={cn(
+                "transition-all duration-700 max-w-md",
+                activeSection === section.id ? "opacity-100 translate-y-0" : "opacity-20 translate-y-4"
+              )}>
+                <h2 className={cn(
+                  "font-semibold tracking-tighter mb-6 text-balance leading-[1.05]",
+                  section.id === 1 ? "text-5xl md:text-7xl" : "text-4xl md:text-5xl"
                 )}>
-                   <h2 className="text-5xl md:text-6xl font-semibold tracking-tighter mb-6 leading-[1.05]">
-                     Ready to Stop<br/>Missing Deadlines?
-                   </h2>
-                   <Button asChild size="lg" className="rounded-full h-14 px-10 text-lg bg-white text-black hover:bg-white/90 hover:scale-105 transition-transform">
-                     <Link to="/signup">Start Your Mission</Link>
-                   </Button>
-                </div>
-             </motion.div>
-          </div>
+                  {section.title.split('\n').map((line, i) => <span key={i} className="block">{line}</span>)}
+                </h2>
+                <p className="text-lg text-white/60 font-light leading-relaxed mb-8">
+                  {section.desc}
+                </p>
+                {section.id === 1 && (
+                  <div className="flex items-center gap-4 pointer-events-auto">
+                    <Button asChild size="lg" className="rounded-full h-12 px-8 text-base bg-white text-black hover:bg-white/90">
+                      <Link to="/signup">Start Your Mission</Link>
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
 
-          {/* Sticky Dashboard (Right) */}
-          <div className="hidden md:flex w-7/12 sticky top-0 h-screen items-center justify-end pl-8 lg:pl-16 py-12 [perspective:1000px]">
-             <motion.div
-               animate={{ 
-                  scale: activeSection === 9 ? 0.9 : 1, 
-                  opacity: activeSection === 9 ? 0.5 : 1,
-                  rotateY: activeSection === 9 ? 10 : 0
-               }}
-               transition={{ type: "spring", stiffness: 50, damping: 20 }}
-               className="w-full h-full max-h-[700px] max-w-[850px] bg-[#0a0a0a] rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)]"
-             >
-               <InteractiveDashboard section={activeSection > 8 ? 8 : activeSection} />
-             </motion.div>
-          </div>
-       </div>
+          {/* Final CTA */}
+          <motion.div
+            onViewportEnter={() => setActiveSection(9)}
+            viewport={{ margin: "-40% 0px -40% 0px" }}
+            className="h-[75vh] flex flex-col justify-center pointer-events-auto"
+          >
+            <div className={cn(
+              "transition-all duration-700",
+              activeSection === 9 ? "opacity-100 translate-y-0" : "opacity-20 translate-y-4"
+            )}>
+              <h2 className="text-5xl md:text-6xl font-semibold tracking-tighter mb-6 leading-[1.05]">
+                Ready to Stop<br />Missing Deadlines?
+              </h2>
+              <Button asChild size="lg" className="rounded-full h-14 px-10 text-lg bg-white text-black hover:bg-white/90 hover:scale-105 transition-transform">
+                <Link to="/signup">Start Your Mission</Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Sticky Dashboard (Right) */}
+        <div className="hidden md:flex w-7/12 sticky top-0 h-screen items-center justify-end pl-8 lg:pl-16 py-12 [perspective:1000px]">
+          <motion.div
+            animate={{
+              scale: activeSection === 9 ? 0.9 : 1,
+              opacity: activeSection === 9 ? 0.5 : 1,
+              rotateY: activeSection === 9 ? 10 : 0
+            }}
+            transition={{ type: "spring", stiffness: 50, damping: 20 }}
+            className="w-full h-full max-h-[700px] max-w-[850px] bg-[#0a0a0a] rounded-2xl overflow-hidden border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)]"
+          >
+            <InteractiveDashboard section={activeSection > 8 ? 8 : activeSection} />
+          </motion.div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, Clock, Star, CheckCircle2, ChevronRight, Zap } from 'lucide-react';
+import { Play, Clock, Star, CheckCircle2, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTasks } from '../context/TaskContext';
 import MissionMode from '../components/mission/MissionMode';
@@ -43,35 +43,21 @@ export default function Mission() {
     await completeMission(activeMission.missionId);
 
     updateTask(activeMission.id, {
-  status: "completed",
-});
+      status: "completed",
+    });
 
-const analytics = await getAnalytics();
+    const analytics = await getAnalytics();
 
-setMissionResult({
-  xp: analytics.xp,
-  streak: analytics.streak,
-  level: analytics.level,
-  nextLevelXP: analytics.nextLevelXP,
-});
-
-setActiveMission(null);
-
-    const xp =
-      activeMission.priority === "critical"
-        ? 100
-        : activeMission.priority === "high"
-          ? 70
-          : activeMission.priority === "medium"
-            ? 50
-            : 30;
-
-    const streak =
-      (Number(localStorage.getItem("streak")) || 0) + 1;
+    setMissionResult({
+      xp: analytics.xp,
+      streak: analytics.streak,
+      level: analytics.level,
+      nextLevelXP: analytics.nextLevelXP,
+    });
 
     setActiveMission(null);
+  };
 
-  
 
   const handleInterruptMission = (stats: any) => {
     setActiveMission(null);
@@ -82,7 +68,7 @@ setActiveMission(null);
       <AnimatePresence>
         {missionResult && (
           <MissionComplete
-            xp={70}
+    xp={missionResult.xp}
             streak={missionResult.streak}
             level={missionResult.level}
             nextLevelXP={missionResult.nextLevelXP}
@@ -132,7 +118,11 @@ setActiveMission(null);
                   </h3>
                   <div className="flex items-center gap-4 text-sm font-medium">
                     <span className="text-amber-400 flex items-center gap-1.5">
-                      <Zap className="w-4 h-4" /> Priority: {recommendedMission.priority === 'critical' ? 'High' : 'Medium'}
+                      <img
+  src="/logo.png"
+  alt="Deadline Zero"
+  className="w-4 h-4 object-contain"
+/>Priority: {recommendedMission.priority === 'critical' ? 'High' : 'Medium'}
                     </span>
                     <span className="text-white/40">•</span>
                     <span className="text-white/60">Scheduled: 3:00 PM</span>
@@ -220,5 +210,4 @@ setActiveMission(null);
       </div>
     </>
   );
-}
 }

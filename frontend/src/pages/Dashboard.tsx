@@ -3,8 +3,17 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Zap, Calendar, Target, Clock, Activity, Flag, Sparkles, CheckCircle2, AlertTriangle, ChevronRight } from 'lucide-react';
-import { useTasks } from '../context/TaskContext';
+import {
+  Calendar,
+  Target,
+  Clock,
+  Activity,
+  Flag,
+  Sparkles,
+  CheckCircle2,
+  AlertTriangle,
+  ChevronRight
+} from 'lucide-react'; import { useTasks } from '../context/TaskContext';
 import { generatePlan } from '../lib/plan.service';
 import { useRoutine } from '../context/RoutineContext';
 import { getActiveMission } from '../lib/mission.service';
@@ -58,7 +67,7 @@ export default function Dashboard() {
   const [isPlanning, setIsPlanning] = useState(false);
   const [planCompleted, setPlanCompleted] = useState(false);
   const [planningStep, setPlanningStep] = useState(0);
-    const planningMessages = [
+  const planningMessages = [
     "Reading your routine",
     "Checking deadlines",
     "Calculating available hours",
@@ -83,25 +92,25 @@ export default function Dashboard() {
     loadMission();
   }, []);
   useEffect(() => {
-  if (!isPlanning) {
-    setPlanningStep(0);
-    return;
-  }
-
-  let current = 0;
-
-  const interval = setInterval(() => {
-    current++;
-
-    setPlanningStep(current);
-
-    if (current >= planningMessages.length) {
-      clearInterval(interval);
+    if (!isPlanning) {
+      setPlanningStep(0);
+      return;
     }
-  }, 500);
 
-  return () => clearInterval(interval);
-}, [isPlanning]);
+    let current = 0;
+
+    const interval = setInterval(() => {
+      current++;
+
+      setPlanningStep(current);
+
+      if (current >= planningMessages.length) {
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [isPlanning]);
 
   const priorityTasks = tasks
     .filter(t => t.status !== 'completed' && (t.priority === 'critical' || t.priority === 'high'))
@@ -174,15 +183,15 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const handleStartMission = async () => {
-  if (!missionTask) return;
+    if (!missionTask) return;
 
-  try {
-    await startMission(missionTask.id);
-    navigate("/mission");
-  } catch (err) {
-    console.error(err);
-  }
-};
+    try {
+      await startMission(missionTask.id);
+      navigate("/mission");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
 
 
@@ -291,11 +300,11 @@ export default function Dashboard() {
                 >
                   {planCompleted ? (
                     <>
-                      🚀 Start Mission
+                      Start Mission
                       <ChevronRight className="ml-2 w-5 h-5" />
                     </>
                   ) : (
-                    <>✨ Build Today's Plan</>
+                    <>Build Today's Plan</>
                   )}
                 </button>
               </div>
@@ -352,8 +361,11 @@ export default function Dashboard() {
         <DashboardCard delay={0.1}>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Productivity Streak</CardTitle>
-            <Zap className="w-4 h-4 text-amber-500" />
-          </CardHeader>
+            <img
+              src="/logo.png"
+              alt="Deadline Zero"
+              className="w-4 h-4 object-contain"
+            />          </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold tracking-tight">
               <NumberCounter value={12} suffix=" Days" />
@@ -471,7 +483,11 @@ export default function Dashboard() {
           <DashboardCard delay={0.5}>
             <CardHeader>
               <CardTitle className="text-base font-medium flex items-center gap-2">
-                <Zap className="w-4 h-4 text-purple-400" /> Why this mission?
+                <img
+                  src="/logo.png"
+                  alt="Deadline Zero"
+                  className="w-4 h-4 object-contain"
+                /> Why this mission?
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -506,8 +522,8 @@ export default function Dashboard() {
               <div className="space-y-3">
                 {upcomingDeadlines.length > 0 ? upcomingDeadlines.map((deadline, i) => {
                   const isHighRisk =
-  planCompleted &&
-  missionTask?.id === deadline.id; // Just mock first as high risk if planned
+                    planCompleted &&
+                    missionTask?.id === deadline.id; // Just mock first as high risk if planned
                   return (
                     <div key={i} className={`flex flex-col gap-1.5 p-3 rounded-xl border transition-colors ${isHighRisk ? 'border-amber-500/30 bg-amber-500/5' : 'border-white/5 bg-white/[0.01]'
                       }`}>

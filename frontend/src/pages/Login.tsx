@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import { login } from '../lib/auth.service';
@@ -33,10 +32,16 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <Link to="/" className="absolute top-8 left-8 flex items-center gap-2">
-        <div className="w-6 h-6 rounded bg-primary flex items-center justify-center">
-          <Zap className="w-3 h-3 text-primary-foreground" />
-        </div>
+      <Link to="/" className="absolute top-8 left-8 flex items-center gap-3">
+        <img
+          src="/logo.png"
+          alt="Deadline Zero"
+          className="w-10 h-10 object-contain"
+        />
+
+        <span className="font-semibold tracking-tight text-lg">
+          Deadline Zero
+        </span>
       </Link>
 
       <motion.div

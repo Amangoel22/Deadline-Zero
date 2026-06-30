@@ -6,8 +6,7 @@ import {
   Crosshair, 
   BarChart3, 
   User, 
-  Settings as SettingsIcon,
-  Zap
+  Settings as SettingsIcon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -54,12 +53,17 @@ export default function Sidebar() {
   return (
     <aside className="w-[240px] flex-shrink-0 border-r border-white/5 bg-sidebar flex flex-col hidden md:flex">
       <div className="h-16 flex items-center px-6">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center shadow-sm">
-            <Zap className="w-3.5 h-3.5 text-primary-foreground group-hover:scale-110 transition-transform" />
-          </div>
-          <span className="font-semibold tracking-tight text-[15px]">Deadline Zero</span>
-        </Link>
+        <Link to="/" className="flex items-center gap-3 group">
+  <img
+    src="/logo.png"
+    alt="Deadline Zero"
+    className="h-9 w-9 object-contain transition-transform group-hover:scale-105"
+  />
+
+  <span className="font-semibold tracking-tight text-[15px]">
+    Deadline Zero
+  </span>
+</Link>
       </div>
 
       <div className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
